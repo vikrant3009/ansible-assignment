@@ -126,13 +126,15 @@ Here is the content of the playbook file named `playbook.yml`:
 ### Output will look like:-
 ![image](https://github.com/user-attachments/assets/30616850-9073-4c98-a31d-2f6f123b8960)
 
-# Troubleshooting Guide for Kubernetes Cluster Setup and Deployment
+---------------------------
+
+## Troubleshooting 
 
 This guide provides troubleshooting steps for common issues encountered when running the Ansible playbook for setting up a Kubernetes cluster and deploying the NGINX Ingress Controller, along with the "Hello World" application.
 
-## Common Issues and Solutions
+### Common Issues and Solutions
 
-### 1. **Connection Issues**
+#### 1. **Connection Issues**
 
 **Symptom**: Ansible fails to connect to the target host(s).
 
@@ -144,7 +146,7 @@ This guide provides troubleshooting steps for common issues encountered when run
 - Verify that the IP address or hostname in the `inventory` file is correct and reachable.
 - Ensure the SSH key or credentials specified in the `ansible.cfg` file are correct and that the key has the appropriate permissions (e.g., `chmod 600`).
 
-### 2. **Permission Denied Errors**
+#### 2. **Permission Denied Errors**
 
 **Symptom**: Errors related to permission denial during playbook execution.
 
@@ -156,7 +158,7 @@ This guide provides troubleshooting steps for common issues encountered when run
 - Ensure that the `remote_user` in the `ansible.cfg` has sufficient permissions to execute tasks on the target nodes.
 - Verify that `become` and `become_method` are correctly configured in `ansible.cfg` to allow privilege escalation.
 
-### 3. **Role Execution Failures**
+#### 3. **Role Execution Failures**
 
 **Symptom**: Specific roles fail to execute or return errors.
 
@@ -168,7 +170,7 @@ This guide provides troubleshooting steps for common issues encountered when run
 - Ensure that all roles listed in the playbook are available in the `roles` directory or installed from Ansible Galaxy.
 - Check the role documentation for any dependencies or prerequisites and ensure they are met.
 
-### 4. **Application Deployment Issues**
+#### 4. **Application Deployment Issues**
 
 **Symptom**: The "Hello World" application does not deploy or is not accessible.
 
@@ -181,7 +183,7 @@ This guide provides troubleshooting steps for common issues encountered when run
 - Verify the Kubernetes resources such as deployments, services, and ingress are correctly configured.
 - Check the status of the pods using `kubectl get pods` and ensure they are running as expected.
 
-### 5. **TLS Configuration Problems**
+#### 5. **TLS Configuration Problems**
 
 **Symptom**: TLS certificates are not properly configured or the application is not accessible over HTTPS.
 
@@ -193,7 +195,7 @@ This guide provides troubleshooting steps for common issues encountered when run
 - Verify the TLS certificate configuration and paths in the `setup_tls_for_hello_world` role.
 - Check the Ingress resource to ensure it is correctly set up to use the TLS certificates.
 
-### 6. **General Debugging Tips**
+#### 6. **General Debugging Tips**
 
 - **Enable Verbose Output**: Run the playbook with the `-v` (verbose) option to get more detailed output. For example:
 
@@ -201,6 +203,6 @@ This guide provides troubleshooting steps for common issues encountered when run
   ansible-playbook -i inventory setup-kubernetes.yml -v
   ```
 
-  ## Conclusion
+## Conclusion
 
 This playbook provides a comprehensive solution for setting up a Kubernetes cluster and deploying essential components such as the NGINX Ingress Controller and a sample "Hello World" application. By following the steps outlined, you should be able to deploy a fully functional Kubernetes environment that meets your needs.
