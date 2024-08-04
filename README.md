@@ -195,6 +195,23 @@ This guide provides troubleshooting steps for common issues encountered when run
 - Verify the TLS certificate configuration and paths in the `setup_tls_for_hello_world` role.
 - Check the Ingress resource to ensure it is correctly set up to use the TLS certificates.
 
+#### 6. **Failed to import the required Python library (kubernetes) on minikube's Python**
+
+**Symptom**: Playbooked failed with below error
+![image](https://github.com/user-attachments/assets/8c7e2de1-263a-4f0e-a6ad-add7d7c48384)
+**Possible Causes**:
+- Pip 3 and python not installed
+- pyYAML, kubernete and jsonpatch not installed
+
+**Solutions**:
+- Install required packages on target machine
+  ```bash
+    apt install python3-pip
+    pip install pyYAML
+    pip install kubernetes
+    pip install jsonpatch
+  ```
+
 #### 6. **General Debugging Tips**
 
 - **Enable Verbose Output**: Run the playbook with the `-v` (verbose) option to get more detailed output. For example:
