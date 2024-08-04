@@ -1,0 +1,29 @@
+---
+- name: Generate self-signed certificate and key
+  command: openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /tmp/tls.key -out /tmp/tls.crt -subj "/CN={{ ingress_host }}/O=devops"
+  args:
+    creates: /tmp/tls.key
+
+- name: Slurp the TLS key file
+  slurp:
+    src: /tmp/tls.key
+  register: tls_key
+
+- name: Slurp the TLS cert file
+  slurp:
+    src: /tmp/tls.crt
+  register: tls_crt
+
+- name: Create Kubernetes secret for TLS
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: hello-world-tls
+        namespace: hello-world
+      data:
+        tls.crt: "{{ tls_crt.content }}"
+        tls.key: "{{ tls_key.content }}"
+      type: kubernetes.io/tls

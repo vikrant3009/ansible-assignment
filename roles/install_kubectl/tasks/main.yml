@@ -1,0 +1,15 @@
+---
+- name: Install kubectl using snap
+  snap:
+    name: kubectl
+    classic: yes
+    state: present
+
+- name: Verify kubectl Installation
+  command: kubectl cluster-info
+  register: kubectl_cluster_info
+
+- name: Debug kubectl cluster-info
+  debug:
+    var: kubectl_cluster_info
+

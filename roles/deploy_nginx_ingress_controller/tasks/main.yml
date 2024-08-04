@@ -1,0 +1,32 @@
+---
+- name: Add Ingress Nginx Helm Repository
+  command: helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+  register: helm_repo_add
+
+- name: Debug Helm Repo Add
+  debug:
+    var: helm_repo_add
+
+- name: Update Helm Repositories
+  command: helm repo update
+
+- name: Install or Upgrade Ingress Nginx
+  command: >
+    helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx
+    --namespace ingress-nginx --create-namespace
+    --set controller.kind=DaemonSet
+    --set controller.hostPort.enabled=true
+    --set controller.ingressClass=nginx
+  register: helm_nginx_install
+
+- name: Debug Helm NGINX Install
+  debug:
+    var: helm_nginx_install
+
+- name: Verify Nginx Ingress Controller Setup
+  command: kubectl get all -n ingress-nginx
+  register: nginx_status
+
+- name: Debug Nginx Ingress Controller Status
+  debug:
+    var: nginx_status

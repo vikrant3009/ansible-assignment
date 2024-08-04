@@ -1,0 +1,39 @@
+---
+- name: Apply Ingress with tls
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: networking.k8s.io/v1
+      kind: Ingress
+      metadata:
+        annotations:
+          kubernetes.io/ingress.class: nginx
+        name: hello-world-ingress
+        namespace: hello-world
+      spec:
+        ingressClassName: nginx
+        rules:
+        - host: "{{ ingress_host }}" 
+          http:
+            paths:
+            - path: /
+              pathType: Prefix
+              backend:
+                service:
+                  name: hello-world-svc
+                  port:
+                    number: 80
+        tls:
+        - hosts:
+          - "{{ ingress_host }}" 
+          secretName: hello-world-tls
+
+- name: Verify Ingress
+  kubernetes.core.k8s_info:
+    kind: Ingress
+    namespace: hello-world
+  register: ingress_status
+
+- name: Debug Ingress Status
+  debug:
+    var: ingress_status

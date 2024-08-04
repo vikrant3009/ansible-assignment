@@ -1,0 +1,15 @@
+---
+- name: Install Helm using snap
+  snap:
+    name: helm
+    classic: yes
+    state: present
+
+- name: Verify Helm Installation
+  command: helm version
+  register: helm_version
+
+- name: Debug Helm Version
+  debug:
+    var: helm_version
+

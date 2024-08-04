@@ -1,0 +1,9 @@
+- name: Verify access to Hello World application
+  command: curl -k https://{{ ingress_host }}
+  register: curl_result
+  failed_when: "'Hello, world!' not in curl_result.stdout"
+  changed_when: False
+
+- name: Debug Curl Result
+  debug:
+    var: curl_result.stdout

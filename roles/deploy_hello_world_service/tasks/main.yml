@@ -1,0 +1,26 @@
+---
+- name: Apply Service
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: hello-world-svc
+        namespace: hello-world
+      spec:
+        selector:
+          app: hello-world
+        ports:
+        - port: 80
+          targetPort: 8080
+
+- name: Verify Service
+  kubernetes.core.k8s_info:
+    kind: Service
+    namespace: hello-world
+  register: svc_status
+
+- name: Debug Service Status
+  debug:
+    var: svc_status

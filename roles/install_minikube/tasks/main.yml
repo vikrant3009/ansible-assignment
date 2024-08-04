@@ -1,0 +1,40 @@
+---
+- name: Update Packages
+  apt:
+    update_cache: yes
+
+- name: Login to Root
+  command: sudo su -
+
+- name: Install Docker and Docker.io
+  apt:
+    name:
+      - docker
+      - docker.io
+    state: present
+
+- name: Install curl and wget Utilities
+  apt:
+    name:
+      - curl
+      - wget
+    state: present
+
+- name: Download Minikube
+  get_url:
+    url: https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
+    dest: /tmp/minikube_latest_amd64.deb
+
+- name: Install Minikube
+  command: sudo dpkg -i /tmp/minikube_latest_amd64.deb
+
+- name: Start Minikube Cluster
+  command: minikube start --driver=docker --force
+
+- name: Verify Minikube Setup
+  command: minikube status
+  register: minikube_status
+
+- name: Debug Minikube Status
+  debug:
+    var: minikube_status

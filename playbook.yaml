@@ -1,0 +1,15 @@
+---
+- name: Setup Kubernetes Cluster and Deploy NGINX Ingress Controller
+  hosts: all
+  become: true 
+
+  roles:
+    #- install_minikube
+    #- install_kubectl
+    #- install_helm
+    #- deploy_nginx_ingress_controller
+    - deploy_hello_world_application
+    - deploy_hello_world_service
+    - deploy_hello_world_ingress_resource
+    - setup_tls_for_hello_world
+    - verify_hello_world
