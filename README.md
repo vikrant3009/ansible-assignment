@@ -102,10 +102,10 @@ Here is the content of the playbook file named `playbook.yml`:
   become: true
 
   roles:
-    #- install_minikube
-    #- install_kubectl
-    #- install_helm
-    #- deploy_nginx_ingress_controller
+    - install_minikube
+    - install_kubectl
+    - install_helm
+    - deploy_nginx_ingress_controller
     - deploy_hello_world_application
     - deploy_hello_world_service
     - deploy_hello_world_ingress_resource
